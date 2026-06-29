@@ -9,11 +9,11 @@ export function Card({ children, className = '' }: { children: ReactNode; classN
   return <div className={`rounded-xl border border-border bg-card p-5 ${className}`}>{children}</div>
 }
 
-export function AgentBusy({ label }: { label: string }) {
+export function AgentBusy({ label, hint }: { label: string; hint?: string }) {
   return (
     <div className="flex items-center gap-2 text-sm text-primary py-2">
       <Loader2 className="w-4 h-4 animate-spin" />
-      <span>{label} is working…</span>
+      <span>{label} is working{hint ? ` — ${hint}` : '…'}</span>
     </div>
   )
 }

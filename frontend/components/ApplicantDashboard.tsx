@@ -735,7 +735,7 @@ function InterviewTab({ app }: { app: JobApp }) {
       <button onClick={run} disabled={loading} className="text-xs px-3 py-1.5 rounded-md bg-emerald-500/20 text-emerald-200 hover:bg-emerald-500/30 disabled:opacity-60">
         Take AI interview prep
       </button>
-      {loading && <AgentBusy label="Interview Prep agent" />}
+      {loading && <AgentBusy label="Interview Prep agent" hint="researching the company, can take up to 90 seconds" />}
       {!loading && result && (
         <div className="mt-3 space-y-3 text-sm border-t border-border pt-3">
           <div><p className="text-xs text-muted-foreground mb-1">Prep notes</p><p className="whitespace-pre-wrap text-muted-foreground max-h-72 overflow-y-auto">{result.prep_notes}</p></div>
