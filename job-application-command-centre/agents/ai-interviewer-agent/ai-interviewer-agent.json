@@ -1,0 +1,8 @@
+{
+  "name": "ai-interviewer-agent",
+  "description": "Conducts a turn-by-turn mock interview tailored to the role and the candidate's resume, then gives structured feedback. Conversational; no tools.",
+  "instruction": { "$file": "instruction.md" },
+  "toolsets": [],
+  "visibility": "POD",
+  "permissions": { "grants": [] }
+}

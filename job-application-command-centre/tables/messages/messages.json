@@ -1,0 +1,21 @@
+{
+  "name": "messages",
+  "primary_key_column": "id",
+  "enable_rls": true,
+  "visibility": "POD",
+  "columns": [
+    { "name": "application_id", "type": "UUID", "required": true,
+      "foreign_key": { "references": "applications.id" } },
+    { "name": "contact_id", "type": "UUID", "foreign_key": { "references": "contacts.id" } },
+    { "name": "purpose", "type": "ENUM", "required": true, "default": "follow_up",
+      "options": ["follow_up", "thank_you", "intro", "status_check", "other"] },
+    { "name": "draft_subject", "type": "TEXT", "max_length": 300 },
+    { "name": "draft_body", "type": "TEXT" },
+    { "name": "status", "type": "ENUM", "required": true, "default": "draft",
+      "options": ["draft", "approved", "sent", "failed"] },
+    { "name": "recipient_email", "type": "TEXT", "max_length": 320 },
+    { "name": "sent_at", "type": "DATETIME" },
+    { "name": "error_message", "type": "TEXT" }
+  ],
+  "config": {}
+}

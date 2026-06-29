@@ -1,0 +1,21 @@
+{
+  "name": "interviews",
+  "primary_key_column": "id",
+  "enable_rls": true,
+  "visibility": "POD",
+  "columns": [
+    { "name": "application_id", "type": "UUID", "required": true,
+      "foreign_key": { "references": "applications.id" } },
+    { "name": "round_name", "type": "TEXT", "required": true, "max_length": 200 },
+    { "name": "scheduled_at", "type": "DATETIME" },
+    { "name": "format", "type": "ENUM", "default": "video",
+      "options": ["phone", "video", "onsite", "take_home"] },
+    { "name": "interviewer_name", "type": "TEXT", "max_length": 200 },
+    { "name": "status", "type": "ENUM", "required": true, "default": "scheduled",
+      "options": ["scheduled", "completed", "cancelled"] },
+    { "name": "prep_notes", "type": "TEXT" },
+    { "name": "likely_questions", "type": "JSON" },
+    { "name": "outcome_notes", "type": "TEXT" }
+  ],
+  "config": {}
+}

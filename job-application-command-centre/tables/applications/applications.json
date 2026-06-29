@@ -1,0 +1,32 @@
+{
+  "name": "applications",
+  "primary_key_column": "id",
+  "enable_rls": true,
+  "visibility": "POD",
+  "columns": [
+    { "name": "owner_username", "type": "TEXT", "max_length": 100 },
+    { "name": "company", "type": "TEXT", "required": true, "max_length": 200 },
+    { "name": "role_title", "type": "TEXT", "required": true, "max_length": 200 },
+    { "name": "source", "type": "ENUM", "required": true, "default": "portal",
+      "options": ["portal", "referral", "email", "linkedin", "other"] },
+    { "name": "status", "type": "ENUM", "required": true, "default": "saved",
+      "options": ["saved", "applied", "screening", "interviewing", "offer", "rejected", "withdrawn"] },
+    { "name": "priority", "type": "ENUM", "default": "medium",
+      "options": ["low", "medium", "high"] },
+    { "name": "job_description", "type": "TEXT" },
+    { "name": "jd_url", "type": "TEXT", "max_length": 500 },
+    { "name": "parsed_skills", "type": "JSON" },
+    { "name": "parsed_requirements", "type": "JSON" },
+    { "name": "key_responsibilities", "type": "JSON" },
+    { "name": "seniority_level", "type": "TEXT", "max_length": 100 },
+    { "name": "jd_summary", "type": "TEXT" },
+    { "name": "resume_file", "type": "FILE_PATH", "max_length": 500 },
+    { "name": "resume_suggestions", "type": "TEXT" },
+    { "name": "applied_date", "type": "DATE" },
+    { "name": "next_action", "type": "TEXT", "max_length": 300 },
+    { "name": "next_action_date", "type": "DATE" },
+    { "name": "contact_id", "type": "UUID", "foreign_key": { "references": "contacts.id" } },
+    { "name": "notes", "type": "TEXT" }
+  ],
+  "config": {}
+}

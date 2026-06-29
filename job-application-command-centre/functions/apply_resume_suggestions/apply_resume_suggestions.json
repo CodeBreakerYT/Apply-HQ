@@ -1,0 +1,11 @@
+{
+  "name": "apply_resume_suggestions",
+  "description": "Persists resume-advisor-agent's suggestions (formatted as numbered text) onto an applications row.",
+  "type": "API",
+  "visibility": "POD",
+  "code": { "$file": "code.py" },
+  "permissions": { "grants": [
+    { "resource_type": "datastore_table", "resource_name": "applications",
+      "permission_ids": ["datastore.table.read", "datastore.record.read", "datastore.record.write"] }
+  ] }
+}

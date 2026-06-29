@@ -1,0 +1,22 @@
+# Netlify config for the Next.js frontend.
+# The official @netlify/plugin-nextjs adapter handles the App Router build.
+[build]
+  command = "pnpm build"
+  publish = ".next"
+
+[build.environment]
+  # Netlify defaults to npm; pin pnpm via corepack.
+  NETLIFY_USE_PNPM = "true"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# NOTE: set these as Netlify site environment variables (Site settings ->
+# Environment variables) - do NOT commit real values:
+#   NEXT_PUBLIC_FIREBASE_API_KEY
+#   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+#   NEXT_PUBLIC_FIREBASE_PROJECT_ID
+#   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+#   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+#   NEXT_PUBLIC_FIREBASE_APP_ID
+#   NEXT_PUBLIC_BACKEND_URL   (your HuggingFace Space URL, e.g. https://<user>-<space>.hf.space)

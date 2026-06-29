@@ -1,0 +1,13 @@
+{
+  "name": "apply_message_draft",
+  "description": "Persists recruiter-message-agent's drafted subject/body as a draft row in messages, resolving the contact's email and updating an existing draft for the same application+purpose instead of duplicating it.",
+  "type": "API",
+  "visibility": "POD",
+  "code": { "$file": "code.py" },
+  "permissions": { "grants": [
+    { "resource_type": "datastore_table", "resource_name": "messages",
+      "permission_ids": ["datastore.table.read", "datastore.record.read", "datastore.record.write"] },
+    { "resource_type": "datastore_table", "resource_name": "contacts",
+      "permission_ids": ["datastore.table.read", "datastore.record.read"] }
+  ] }
+}

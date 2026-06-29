@@ -1,0 +1,11 @@
+{
+  "name": "apply_interview_prep",
+  "description": "Persists interview-prep-agent's prep notes and likely questions onto an interviews row.",
+  "type": "API",
+  "visibility": "POD",
+  "code": { "$file": "code.py" },
+  "permissions": { "grants": [
+    { "resource_type": "datastore_table", "resource_name": "interviews",
+      "permission_ids": ["datastore.table.read", "datastore.record.read", "datastore.record.write"] }
+  ] }
+}

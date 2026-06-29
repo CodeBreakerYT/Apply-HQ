@@ -1,0 +1,23 @@
+{
+  "name": "jd-parser-agent",
+  "description": "Reads the job_description on an application and returns structured fields: skills, requirements, responsibilities, seniority, and a summary. Read-only - a function persists the result.",
+  "instruction": { "$file": "instruction.md" },
+  "toolsets": ["POD"],
+  "visibility": "POD",
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "application_id": { "type": "string" },
+      "skills": { "type": "array", "items": { "type": "string" } },
+      "requirements": { "type": "array", "items": { "type": "string" } },
+      "key_responsibilities": { "type": "array", "items": { "type": "string" } },
+      "seniority_level": { "type": "string" },
+      "summary": { "type": "string" }
+    },
+    "required": ["application_id", "skills", "requirements", "summary"]
+  },
+  "permissions": { "grants": [
+    { "resource_type": "datastore_table", "resource_name": "applications",
+      "permission_ids": ["datastore.table.read", "datastore.record.read"] }
+  ] }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "approve-and-send-message",
+  "description": "Human approval gate before a drafted recruiter message is sent via Gmail.",
+  "start": { "type": "MANUAL" },
+  "nodes": [
+    { "id": "review", "type": "FORM", "label": "Review draft",
+      "config": { "input_schema": {
+        "type": "object",
+        "properties": {
+          "message_id": { "type": "string", "description": "id of the row in the messages table to review" },
+          "approved": { "type": "boolean" },
+          "edited_body": { "type": "string", "description": "optional replacement body if you edited the draft" }
+        },
+        "required": ["message_id", "approved"] } } },
+    { "id": "approved_route", "type": "DECISION", "label": "Approved?",
+      "config": { "rules": [
+        { "condition": "review.approved == `true`", "next_node_id": "send" }
+      ] } },
+    { "id": "send", "type": "FUNCTION", "label": "Send via Gmail",
+      "config": { "function_name": "send_recruiter_message",
+        "input_mapping": {
+          "message_id": { "type": "expression", "value": "review.message_id" },
+          "edited_body": { "type": "expression", "value": "review.edited_body", "optional": true }
+        } } },
+    { "id": "end", "type": "END", "label": "Done" }
+  ],
+  "edges": [
+    { "id": "e1", "source": "review", "target": "approved_route" },
+    { "id": "e2", "source": "approved_route", "target": "end", "label": "not approved (default)" },
+    { "id": "e3", "source": "approved_route", "target": "send", "label": "approved" },
+    { "id": "e4", "source": "send", "target": "end" }
+  ],
+  "visibility": "POD"
+}

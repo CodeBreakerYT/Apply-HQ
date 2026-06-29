@@ -1,0 +1,20 @@
+{
+  "name": "resume-advisor-agent",
+  "description": "Reads the parsed job description and the applicant's resume file, and returns concrete resume edit suggestions. Read-only - a function persists the result.",
+  "instruction": { "$file": "instruction.md" },
+  "toolsets": ["POD"],
+  "visibility": "POD",
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "application_id": { "type": "string" },
+      "suggestions": { "type": "array", "items": { "type": "string" } },
+      "summary": { "type": "string" }
+    },
+    "required": ["application_id", "suggestions", "summary"]
+  },
+  "permissions": { "grants": [
+    { "resource_type": "datastore_table", "resource_name": "applications",
+      "permission_ids": ["datastore.table.read", "datastore.record.read"] }
+  ] }
+}

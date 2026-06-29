@@ -1,0 +1,11 @@
+{
+  "name": "apply_jd_parse",
+  "description": "Persists jd-parser-agent's structured output (skills, requirements, responsibilities, seniority, summary) onto an applications row.",
+  "type": "API",
+  "visibility": "POD",
+  "code": { "$file": "code.py" },
+  "permissions": { "grants": [
+    { "resource_type": "datastore_table", "resource_name": "applications",
+      "permission_ids": ["datastore.table.read", "datastore.record.read", "datastore.record.write"] }
+  ] }
+}

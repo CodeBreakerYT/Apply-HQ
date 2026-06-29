@@ -1,0 +1,24 @@
+{
+  "name": "recruiter-message-agent",
+  "description": "Drafts a recruiter/referral outreach message for one application and returns subject+body. Read-only - a function persists the draft. Never sends anything itself.",
+  "instruction": { "$file": "instruction.md" },
+  "toolsets": ["POD"],
+  "visibility": "POD",
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "application_id": { "type": "string" },
+      "contact_id": { "type": "string" },
+      "purpose": { "type": "string", "enum": ["follow_up", "thank_you", "intro", "status_check", "other"] },
+      "subject": { "type": "string" },
+      "body": { "type": "string" }
+    },
+    "required": ["application_id", "purpose", "subject", "body"]
+  },
+  "permissions": { "grants": [
+    { "resource_type": "datastore_table", "resource_name": "applications",
+      "permission_ids": ["datastore.table.read", "datastore.record.read"] },
+    { "resource_type": "datastore_table", "resource_name": "contacts",
+      "permission_ids": ["datastore.table.read", "datastore.record.read"] }
+  ] }
+}

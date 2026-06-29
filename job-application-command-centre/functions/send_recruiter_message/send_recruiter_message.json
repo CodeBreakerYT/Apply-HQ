@@ -1,0 +1,15 @@
+{
+  "name": "send_recruiter_message",
+  "description": "Sends an approved drafted recruiter message via Gmail, marks it sent, and updates the contact's last-contacted date.",
+  "type": "API",
+  "visibility": "POD",
+  "code": { "$file": "code.py" },
+  "permissions": { "grants": [
+    { "resource_type": "datastore_table", "resource_name": "messages",
+      "permission_ids": ["datastore.table.read", "datastore.record.read", "datastore.record.write"] },
+    { "resource_type": "datastore_table", "resource_name": "contacts",
+      "permission_ids": ["datastore.table.read", "datastore.record.read", "datastore.record.write"] },
+    { "resource_type": "connector", "resource_name": "gmail",
+      "permission_ids": ["connector.use"] }
+  ] }
+}
