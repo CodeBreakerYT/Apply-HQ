@@ -18,6 +18,14 @@ _REFRESH_SKEW_MS = 5 * 60 * 1000
 # the .env seed is used after a cold restart.
 _SESSION_FILE = Path(os.environ.get("LEMMA_SESSION_FILE", "/tmp/lemma_session.json"))
 
+# Free alternative to HF persistent storage: if HF_TOKEN (a write-scoped token
+# for this Space) is set, rewrite the LEMMA_REFRESH_TOKEN *secret* itself via
+# the Hub API on every rotation. Secrets live at the Hub level, not on the
+# container's disk, so they survive restarts without paid storage. SPACE_ID
+# is injected automatically by the HF Spaces runtime.
+_HF_TOKEN = os.environ.get("HF_TOKEN", "")
+_HF_SPACE_ID = os.environ.get("SPACE_ID", "")
+
 
 class _TokenManager:
     """Holds the Lemma session in memory, keeps the access token fresh, and
@@ -51,6 +59,23 @@ class _TokenManager:
             _SESSION_FILE.write_text(json.dumps({"refresh_token": self._refresh_token}))
         except Exception:
             # Persistence is best-effort; in-memory state still works for this run.
+            pass
+        self._persist_remote_secret()
+
+    def _persist_remote_secret(self) -> None:
+        # Best-effort; skipped entirely outside a Space with HF_TOKEN configured
+        # (e.g. local dev), so a missing/invalid token here never breaks a refresh.
+        if not (_HF_TOKEN and _HF_SPACE_ID):
+            return
+        try:
+            from huggingface_hub import HfApi
+
+            HfApi(token=_HF_TOKEN).add_space_secret(
+                repo_id=_HF_SPACE_ID,
+                key="LEMMA_REFRESH_TOKEN",
+                value=self._refresh_token,
+            )
+        except Exception:
             pass
 
     def _refresh_locked(self) -> None:
