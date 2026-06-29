@@ -57,7 +57,7 @@ uv pip install -r requirements.txt --python ./.venv/Scripts/python.exe
 **3. Frontend** (port 3000):
 ```bash
 cd frontend
-cp .env.example .env.local   # Firebase web config is already filled in the committed example values; backend URL defaults to localhost:8000
+cp .env.example .env.local   # fill in your Firebase web config (see Firebase console -> Project settings); backend URL defaults to localhost:8000
 pnpm install
 pnpm dev
 ```
