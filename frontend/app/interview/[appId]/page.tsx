@@ -96,10 +96,14 @@ export default function InterviewPage({ params }: { params: Promise<{ appId: str
     setPhase('interview')
     try {
       const res = await startInterview(appId)
+      if (!res || !res.message) {
+        throw new Error('The interviewer did not return a question. Please try again.')
+      }
       convIdRef.current = res.conversation_id
       setConvId(res.conversation_id)
       setMsgs([{ role: 'ai', text: res.message }])
     } catch (e) {
+      console.error('startInterview failed:', e)
       setError(e instanceof Error ? e.message : 'Could not start the interview.')
     } finally {
       setStarting(false)
@@ -216,7 +220,15 @@ export default function InterviewPage({ params }: { params: Promise<{ appId: str
               <CheckCircle2 className="w-4 h-4" /> Interview complete — saved to your Interview History.
             </div>
           )}
-          {error && <p className="text-sm text-red-400">{error}</p>}
+          {error && msgs.length === 0 && !busy && (
+            <div className="flex flex-col items-center gap-3 text-center pt-6">
+              <p className="text-sm text-red-400">{error}</p>
+              <button onClick={begin} className="px-4 py-2 rounded-lg bg-primary text-background text-sm font-medium">
+                Retry
+              </button>
+            </div>
+          )}
+          {error && msgs.length > 0 && <p className="text-sm text-red-400">{error}</p>}
         </div>
       </div>
 
